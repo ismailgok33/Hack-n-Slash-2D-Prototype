@@ -147,6 +147,15 @@ public class PlayerController : MonoBehaviour
         IsAttacking = false;
     }
 
+    private void Die()
+    {
+        // Play death animation
+        
+        // Disable player controls
+        
+        // End game
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
