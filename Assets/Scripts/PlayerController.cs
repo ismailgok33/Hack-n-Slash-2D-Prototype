@@ -7,19 +7,30 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance { get; private set; }
 
-    public void AnimationFinished()
-    {
-        IsAttacking = false;
-    }
-
     public bool IsAttacking { get; private set; } = false;
 
     [SerializeField] private float moveSpeed = 1f;
+    
+    [Header("Combat")]
+    [SerializeField] private int health = 1;
+    [SerializeField] private int damage = 1;
+    [SerializeField] private float attackOffset = 1f;
+
+    [Header("Dash")]
+    [SerializeField] private float dashSpeed = 4f;
+    [SerializeField] private float dashDuration = 0.2f;
+    [SerializeField] private float dashCooldown = 1f;
+    private float _originalMoveSpeed = 1f;
+    private bool _isDashing = false;
+    
     private PlayerControls _playerControls;
     private Vector2 _movementInput;
     private Rigidbody2D _rigidbody;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
+    private Vector3 _lastMoveDirection;
+    private TrailRenderer _trailRenderer;
+    private LayerMask _enemyLayerMask;
 
     private void Awake()
     {
@@ -32,11 +43,17 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _trailRenderer = GetComponentInChildren<TrailRenderer>();
     }
 
     private void Start()
     {
+        _enemyLayerMask = LayerMask.GetMask("Enemy");
+        
+        _lastMoveDirection = Vector3.down;
         _playerControls.Combat.Attack.performed += _ => Attack();
+        _playerControls.Combat.Dash.performed += _ => Dash();
+        _originalMoveSpeed = moveSpeed;
     }
 
     private void OnEnable()
@@ -57,7 +74,12 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerInput()
     {
-        _movementInput = _playerControls.Movement.Move.ReadValue<Vector2>();
+        _movementInput = _playerControls.Movement.Move.ReadValue<Vector2>().normalized;
+
+        if (_movementInput.magnitude != 0)
+        {
+            _lastMoveDirection = _movementInput;
+        }
         
         _animator.SetFloat("moveX", _movementInput.x);
         _animator.SetFloat("moveY", _movementInput.y);
@@ -65,7 +87,6 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        if (IsAttacking) return;
         _rigidbody.MovePosition(_rigidbody.position + _movementInput * (moveSpeed * Time.fixedDeltaTime));
     }
 
@@ -83,7 +104,53 @@ public class PlayerController : MonoBehaviour
 
     private void Attack()
     {
+        if (IsAttacking) return;
+        
         IsAttacking = true;
         _animator.SetTrigger("attack");
+        Damage();
+    }
+    
+    private void Damage()
+    {
+        var hit = Physics2D.Raycast(transform.position, _lastMoveDirection, attackOffset, _enemyLayerMask);
+        if (hit.collider == null) return;
+        var enemy = hit.collider.GetComponent<Enemy>();
+        if (enemy != null)
+        {
+            enemy.TakeDamage(damage);
+        }
+    }
+
+    private void Dash()
+    {
+        if (_isDashing) return;
+        _isDashing = true;
+        moveSpeed *= dashSpeed;
+        _trailRenderer.emitting = true;
+        StartCoroutine(EndDashRoutine());
+    }
+
+    private IEnumerator EndDashRoutine()
+    {
+        yield return new WaitForSeconds(dashDuration);
+        moveSpeed = _originalMoveSpeed;
+        _trailRenderer.emitting = false;
+        yield return new WaitForSeconds(dashCooldown);
+        _isDashing = false;
+    }
+    
+    public Vector3 GetPosition() => transform.position;
+    
+    public void AnimationFinished()
+    {
+        IsAttacking = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        var position = transform.position;
+        Gizmos.DrawLine(position, position + _lastMoveDirection * attackOffset);
     }
 }
