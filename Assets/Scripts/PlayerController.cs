@@ -89,6 +89,18 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody.MovePosition(_rigidbody.position + _movementInput * (moveSpeed * Time.fixedDeltaTime));
     }
+    
+    public void TakeDamage(int damageAmount)
+    {
+        health -= damageAmount;
+        CheckDeath();
+    }
+
+    private void CheckDeath()
+    {
+        if (health > 0) return;
+        Die();
+    }
 
     private void AdjustPlayerDirection()
     {
@@ -150,10 +162,13 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         // Play death animation
+        Debug.Log("Player died");
         
         // Disable player controls
+        _playerControls.Disable();
         
-        // End game
+        // End game (stop game time for now)
+        Time.timeScale = 0f;
     }
 
     private void OnDrawGizmos()

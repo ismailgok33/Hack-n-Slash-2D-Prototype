@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -12,14 +13,25 @@ public class EnemyAI : MonoBehaviour
         Dead
     }
 
-    [SerializeField] private float attackRange = 3f;
+    [SerializeField] private float attackRange = 1f;
     
     private State _state;
     private Enemy _enemy;
+    private NavMeshAgent _navMeshAgent;
+    private Rigidbody2D _rigidbody2D;
 
     private void Awake()
     {
         _enemy = GetComponent<Enemy>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshAgent.updateRotation = false;
+        _navMeshAgent.updateUpAxis = false;
+        _state = State.Chase;
     }
 
     private void Update()
@@ -44,7 +56,9 @@ public class EnemyAI : MonoBehaviour
     // Chases the player
     private void ChasePlayer()
     {
-        // TODO: Chase the player
+        // Chase player
+        _navMeshAgent.SetDestination(PlayerController.Instance.GetPosition());
+        _navMeshAgent.isStopped = false;
         
         // Check if the player is within attack range
         if (Vector3.Distance(transform.position, PlayerController.Instance.GetPosition()) <= attackRange)
@@ -56,7 +70,9 @@ public class EnemyAI : MonoBehaviour
     // Attacks the player withing a certain range
     private void AttackPlayer()
     {
-        _enemy.Attack();
+        _navMeshAgent.isStopped = true;
+        
+        _enemy.Attack(PlayerController.Instance.GetPosition());
         
         // Check if the player is outside of attack range
         if (Vector3.Distance(transform.position, PlayerController.Instance.GetPosition()) > attackRange)
