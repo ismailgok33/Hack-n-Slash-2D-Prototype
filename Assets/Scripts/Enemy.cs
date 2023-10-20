@@ -8,12 +8,13 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private int health = 1;
     [SerializeField] private int damage = 1;
-    [SerializeField] private float attackOffset = 1f;
-    [SerializeField] private float attackCooldown = 1f;
+    [field: SerializeField] public float AttackRange { get; private set; } = 1f;
+    [SerializeField] private float attackCooldown = 2f;
+    private float lastAttackedTime;
     
     private Animator _animator;
     private LayerMask _playerLayerMask;
-    private Vector3 _playerDirection;
+    private Vector3 _playerPosition;
 
     private void Awake()
     {
@@ -41,23 +42,36 @@ public class Enemy : MonoBehaviour
 
     public void Attack(Vector3 direction)
     {
-        _playerDirection = direction;
+        _playerPosition = direction;
         
-        if (Time.time < attackCooldown) return;
+        if (Time.time < attackCooldown + lastAttackedTime) return;
         // Play attack animation
+        Debug.Log("Attack animation is triggered!");
         _animator.SetTrigger("attack");
-        attackCooldown += Time.time;
+        lastAttackedTime = Time.time;
     }
 
     public void PerformAttackTrigger()
     {
         // Check if the player is within attack radius
-        var hit = Physics2D.Raycast(transform.position, _playerDirection, attackOffset, _playerLayerMask);
+        Debug.Log("PerformAttackTrigger is called!");
+        var position = transform.position;
+        var hit = Physics2D.Raycast(position, _playerPosition - position, AttackRange, _playerLayerMask);
         if (hit.collider == null) return;
+        Debug.Log("A collider is found!");
         var player = hit.collider.GetComponent<PlayerController>();
         if (player != null)
         {
+            Debug.Log("Player is hit!");
             player.TakeDamage(damage);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        var position = transform.position;
+        Gizmos.DrawWireSphere(position, AttackRange);
+        Gizmos.DrawLine(position, _playerPosition);
     }
 }

@@ -9,19 +9,19 @@ public class PlayerController : MonoBehaviour
 
     public bool IsAttacking { get; private set; } = false;
 
-    [SerializeField] private float moveSpeed = 1f;
+    public float moveSpeed = 1f;
     
     [Header("Combat")]
     [SerializeField] private int health = 1;
     [SerializeField] private int damage = 1;
     [SerializeField] private float attackOffset = 1f;
 
-    [Header("Dash")]
-    [SerializeField] private float dashSpeed = 4f;
-    [SerializeField] private float dashDuration = 0.2f;
-    [SerializeField] private float dashCooldown = 1f;
-    private float _originalMoveSpeed = 1f;
-    private bool _isDashing = false;
+    // [Header("Dash")]
+    // [SerializeField] private float dashSpeed = 4f;
+    // [SerializeField] private float dashDuration = 0.2f;
+    // [SerializeField] private float dashCooldown = 1f;
+    // private float _originalMoveSpeed = 1f;
+    // private bool _isDashing = false;
     
     private PlayerControls _playerControls;
     private Vector2 _movementInput;
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _trailRenderer = GetComponentInChildren<TrailRenderer>();
+        // _trailRenderer = GetComponentInChildren<TrailRenderer>();
     }
 
     private void Start()
@@ -52,8 +52,8 @@ public class PlayerController : MonoBehaviour
         
         _lastMoveDirection = Vector3.down;
         _playerControls.Combat.Attack.performed += _ => Attack();
-        _playerControls.Combat.Dash.performed += _ => Dash();
-        _originalMoveSpeed = moveSpeed;
+        _playerControls.Combat.Dash.performed += _ => UseActiveCard();
+        // _originalMoveSpeed = moveSpeed;
     }
 
     private void OnEnable()
@@ -134,25 +134,31 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Dash()
+    public void Dash()
     {
-        if (_isDashing) return;
-        _isDashing = true;
-        moveSpeed *= dashSpeed;
-        _trailRenderer.emitting = true;
-        StartCoroutine(EndDashRoutine());
+        
+        // if (_isDashing) return;
+        // _isDashing = true;
+        // moveSpeed *= dashSpeed;
+        // _trailRenderer.emitting = true;
+        // StartCoroutine(EndDashRoutine());
     }
 
-    private IEnumerator EndDashRoutine()
+    // private IEnumerator EndDashRoutine()
+    // {
+    //     yield return new WaitForSeconds(dashDuration);
+    //     moveSpeed = _originalMoveSpeed;
+    //     _trailRenderer.emitting = false;
+    //     yield return new WaitForSeconds(dashCooldown);
+    //     _isDashing = false;
+    // }
+
+    private void UseActiveCard()
     {
-        yield return new WaitForSeconds(dashDuration);
-        moveSpeed = _originalMoveSpeed;
-        _trailRenderer.emitting = false;
-        yield return new WaitForSeconds(dashCooldown);
-        _isDashing = false;
+        CardManager.Instance.UseActiveCard();
     }
     
-    public Vector3 GetPosition() => transform.position;
+    public Vector2 GetPosition() => transform.position;
     
     public void AnimationFinished()
     {

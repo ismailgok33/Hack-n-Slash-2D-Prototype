@@ -32,6 +32,7 @@ public class EnemyAI : MonoBehaviour
         _navMeshAgent.updateRotation = false;
         _navMeshAgent.updateUpAxis = false;
         _state = State.Chase;
+        attackRange = _enemy.AttackRange;
     }
 
     private void Update()
@@ -60,8 +61,10 @@ public class EnemyAI : MonoBehaviour
         _navMeshAgent.SetDestination(PlayerController.Instance.GetPosition());
         _navMeshAgent.isStopped = false;
         
+        FlipSprite();
+        
         // Check if the player is within attack range
-        if (Vector3.Distance(transform.position, PlayerController.Instance.GetPosition()) <= attackRange)
+        if (Vector2.Distance(transform.position, PlayerController.Instance.GetPosition()) <= attackRange)
         {
             _state = State.Attack;
         }
@@ -81,4 +84,10 @@ public class EnemyAI : MonoBehaviour
         }
     }
     
+    private void FlipSprite()
+    {
+        var playerPosition = PlayerController.Instance.GetPosition();
+        var isPlayerToTheRight = playerPosition.x > transform.position.x;
+        transform.localScale = new Vector3(isPlayerToTheRight ? 1 : -1, 1, 1);
+    }
 }
