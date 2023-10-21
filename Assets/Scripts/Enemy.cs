@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
+    [Header("Stats")]
     [SerializeField] private int health = 1;
     [SerializeField] private int damage = 1;
     [field: SerializeField] public float AttackRange { get; private set; } = 1f;
@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     private Animator _animator;
     private LayerMask _playerLayerMask;
     private Vector3 _playerPosition;
+    
+    public event EventHandler OnEnemyKilled;
 
     private void Awake()
     {
@@ -37,6 +39,8 @@ public class Enemy : MonoBehaviour
     {
         if (health > 0) return;
         _animator.SetTrigger("die");
+        // Trigger death event in EnemyAI
+        OnEnemyKilled?.Invoke(this, EventArgs.Empty);
         Destroy(gameObject, 5f);
     }
 

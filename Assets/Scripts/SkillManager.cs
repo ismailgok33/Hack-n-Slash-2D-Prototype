@@ -61,6 +61,7 @@ public class SkillManager : MonoBehaviour
     {
         if (_isDashing) return;
         _isDashing = true;
+        PlayerController.Instance.Dash();
         Debug.Log("moveSpeed before dash: " + moveSpeed);
         moveSpeed *= dashSpeed;
         PlayerController.Instance.moveSpeed = moveSpeed;
@@ -77,6 +78,7 @@ public class SkillManager : MonoBehaviour
         _trailRenderer.emitting = false;
         // yield return new WaitForSeconds(dashCooldown);
         _isDashing = false;
+        PlayerController.Instance.EndDash();
     }
 
 }

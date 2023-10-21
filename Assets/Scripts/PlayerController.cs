@@ -136,12 +136,12 @@ public class PlayerController : MonoBehaviour
 
     public void Dash()
     {
-        
-        // if (_isDashing) return;
-        // _isDashing = true;
-        // moveSpeed *= dashSpeed;
-        // _trailRenderer.emitting = true;
-        // StartCoroutine(EndDashRoutine());
+        _animator.SetBool("isDashing", true);
+    }
+
+    public void EndDash()
+    {
+        _animator.SetBool("isDashing", false);
     }
 
     // private IEnumerator EndDashRoutine()

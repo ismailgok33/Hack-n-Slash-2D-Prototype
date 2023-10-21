@@ -33,6 +33,7 @@ public class EnemyAI : MonoBehaviour
         _navMeshAgent.updateUpAxis = false;
         _state = State.Chase;
         attackRange = _enemy.AttackRange;
+        _enemy.OnEnemyKilled += EnemyOnOnEnemyKilled;
     }
 
     private void Update()
@@ -46,6 +47,7 @@ public class EnemyAI : MonoBehaviour
                 AttackPlayer();
                 break;
             case State.Dead:
+                _navMeshAgent.isStopped = true;
                 break;
             default:
                 Debug.LogError("Wrong state in EnemyAI");
@@ -82,6 +84,11 @@ public class EnemyAI : MonoBehaviour
         {
             _state = State.Chase;
         }
+    }
+    
+    private void EnemyOnOnEnemyKilled(object sender, EventArgs e)
+    {
+        _state = State.Dead;
     }
     
     private void FlipSprite()
