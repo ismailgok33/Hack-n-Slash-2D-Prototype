@@ -144,15 +144,6 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("isDashing", false);
     }
 
-    // private IEnumerator EndDashRoutine()
-    // {
-    //     yield return new WaitForSeconds(dashDuration);
-    //     moveSpeed = _originalMoveSpeed;
-    //     _trailRenderer.emitting = false;
-    //     yield return new WaitForSeconds(dashCooldown);
-    //     _isDashing = false;
-    // }
-
     private void UseActiveCard()
     {
         CardManager.Instance.UseActiveCard();

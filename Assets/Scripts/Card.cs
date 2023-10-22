@@ -18,11 +18,6 @@ public class Card : MonoBehaviour
 
     private bool onCooldown = false;
 
-    private void Start()
-    {
-        // SetupCard();
-    }
-
     public void SetupCard()
     {
         if (cardSO == null) return;
