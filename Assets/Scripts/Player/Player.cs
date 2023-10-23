@@ -27,6 +27,7 @@ public class Player : Entity
     public PlayerIdleState IdleState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }
     public PlayerPrimaryAttackState PrimaryAttackState { get; private set; }
+    public PlayerDashState PlayerDashState { get; private set; }
     
     protected override void Awake()
     {
@@ -37,6 +38,7 @@ public class Player : Entity
         IdleState = new PlayerIdleState(this, StateMachine, "Idle", _playerControls);
         MoveState = new PlayerMoveState(this, StateMachine, "Move", _playerControls);
         PrimaryAttackState = new PlayerPrimaryAttackState(this, StateMachine, "Attack", _playerControls);
+        PlayerDashState = new PlayerDashState(this, StateMachine, "Dash", _playerControls);
     }
     
     protected override void Start()

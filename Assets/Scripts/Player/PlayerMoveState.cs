@@ -27,6 +27,7 @@ public class PlayerMoveState : PlayerGroundedState
         base.Update();
 
         player.SetVelocity(xInput * player.moveSpeed, yInput * player.moveSpeed);
+        player.PositionAttackCheck(xInput, yInput);
 
 
         if (xInput == 0 && yInput == 0)

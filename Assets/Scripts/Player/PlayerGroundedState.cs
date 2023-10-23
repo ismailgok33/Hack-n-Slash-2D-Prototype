@@ -29,6 +29,7 @@ public class PlayerGroundedState : PlayerState
         //     stateMachine.ChangeState(player.counterAttack);
         
         _playerControls.Combat.Attack.performed += _ => Attack();
+        _playerControls.Combat.Dash.performed += _ => UseActiveCard();
 
         // if (!player.IsGroundDetected())
         //     stateMachine.ChangeState(player.airState);
@@ -40,5 +41,10 @@ public class PlayerGroundedState : PlayerState
     private void Attack()
     {
         stateMachine.ChangeState(player.PrimaryAttackState);
+    }
+    
+    private void UseActiveCard()
+    {
+        CardManager.Instance.UseActiveCard();
     }
 }

@@ -22,6 +22,7 @@ public class PlayerAnimationTriggers : MonoBehaviour
             var enemy = hit.GetComponent<Enemy>();
             if (enemy != null)
             {
+                // TODO: Replace this with stats.DoDamage after refactoring the Enemy
                 player.DoDamage(enemy);
                 
                 // EnemyStats _target = hit.GetComponent<EnemyStats>();
