@@ -8,17 +8,11 @@ public class Player : Entity
     public bool isBusy { private set; get; }
     [Header("Move info")]
     public float moveSpeed = 12f;
-    private float defaultMoveSpeed;
+    public float defaultMoveSpeed;
     
     [Header("Combat info")]
-    [SerializeField] private int health = 1;
+    // [SerializeField] private int health = 1;
     [SerializeField] private int damage = 1;
-    
-    [Header("Dash info")]   
-    public float dashSpeed;
-    public float dashDuration;
-    private float defaultDashSpeed;
-    public float dashDir { get; private set; }
  
     private PlayerControls _playerControls;
     
@@ -50,7 +44,8 @@ public class Player : Entity
         StateMachine.Initialize(IdleState);
 
         defaultMoveSpeed = moveSpeed;
-        defaultDashSpeed = dashSpeed;
+        
+        _playerControls.Combat.Dash.performed += _ => UseActiveCard();
     }
 
     protected override void Update()
@@ -85,6 +80,21 @@ public class Player : Entity
         // stateMachine.ChangeState(deadState);
         
         _playerControls.Disable();
+    }
+    
+    private void UseActiveCard()
+    {
+        CardManager.Instance.UseActiveCard();
+    }
+    
+    public void SetMoveSpeed(float newMoveSpeed)
+    {
+        moveSpeed = newMoveSpeed;
+    }
+    
+    public void SetDefaultMovementSpeed()
+    {
+        moveSpeed = defaultMoveSpeed;
     }
     
     private void OnEnable()

@@ -11,9 +11,9 @@ public class PlayerDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
-
-        stateTimer = player.dashDuration;
-
+        
+        stateTimer = SkillManager.Instance.DashSkill.dashDuration;
+        
         player.stats.MakeInvincible(true);
     }
 
@@ -21,7 +21,8 @@ public class PlayerDashState : PlayerState
     {
         base.Exit();
 
-        player.SetZeroVelocity();
+        // player.SetZeroVelocity();
+        player.SetDefaultMovementSpeed();
 
         player.stats.MakeInvincible(false);
     }
@@ -30,9 +31,11 @@ public class PlayerDashState : PlayerState
     {
         base.Update();
 
-        player.SetVelocity(player.dashSpeed * player.dashDir, 0);
+        player.SetVelocity(xInput * player.moveSpeed, yInput * player.moveSpeed);
 
-        if (stateTimer < 0)
-            stateMachine.ChangeState(player.IdleState);
+        if (stateTimer >= 0) return;
+        
+        stateMachine.ChangeState(player.IdleState);
+
     }
 }

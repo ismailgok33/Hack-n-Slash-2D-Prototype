@@ -21,15 +21,13 @@ public class Skill : MonoBehaviour
     
     public virtual bool CanUseSkill()
     {
-        if (cooldownTimer < 0)
-        {
-            UseSkill();
-            cooldownTimer = cooldown;
-            return true;
-        }
-
+        if (cooldownTimer > 0 || !CardManager.Instance.GetActiveCard().CanUseCard()) return false;
+        UseSkill();
+        cooldownTimer = cooldown;
+        return true;
+        
         // player.fx.CreatePopUpText("Cooldown");
-        return false;
+        // return false;
     }
     
     public virtual void UseSkill()

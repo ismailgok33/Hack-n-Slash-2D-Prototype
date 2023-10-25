@@ -33,7 +33,13 @@ public class CardManager : MonoBehaviour
         
         Debug.Log("UseActiveCard is called inside CardManager.");
         
-        activeCard.UseCard();
+        // activeCard.UseCard();
+        SkillManager.Instance.UseSkill(activeCard.GetCardSkill());
+    }
+    
+    public Card GetActiveCard()
+    {
+        return activeCard;
     }
 
 }

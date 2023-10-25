@@ -15,6 +15,8 @@ public class Card : MonoBehaviour
     [SerializeField] private Image cardIconImage;
     [SerializeField] private Image cardColor;
     [SerializeField] private Slider amountSlider;
+    
+    private CardSkill cardSkill;
 
     private bool onCooldown = false;
 
@@ -29,6 +31,7 @@ public class Card : MonoBehaviour
         cardColor.color = cardSO.color;
 
         amountSlider.maxValue = cardSO.amount;
+        cardSkill = cardSO.skill;
         UpdateCardAmount();
         // amountSlider.value = 0;
     }
@@ -38,20 +41,36 @@ public class Card : MonoBehaviour
         amountSlider.value = cardSO.amount - amount;
     }
 
-    public void UseCard()
+    private void UseCard()
     {
-        if (cardSO == null || amount == 0 || onCooldown) return;
+        // if (cardSO == null || amount == 0 || onCooldown) return;
 
-        onCooldown = true;
+        // onCooldown = true;
         amount--;
-        SkillManager.Instance.UseSkill(cardSO.skill);
+        // SkillManager.Instance.UseSkill(cardSO.skill);
+        
         UpdateCardAmount();
-        StartCoroutine(EndCardRoutine());
+        // StartCoroutine(EndCardRoutine());
+    }
+
+    public bool CanUseCard()
+    {
+        if (cardSO == null || amount == 0) return false;
+
+        Debug.Log("CanUseCard is called inside Card.");
+        
+        UseCard();
+        return true;
     }
     
     private IEnumerator EndCardRoutine()
     {
         yield return new WaitForSeconds(cardSO.cooldown);
         onCooldown = false;
+    }
+
+    public CardSkill GetCardSkill()
+    {
+        return cardSkill;
     }
 }
