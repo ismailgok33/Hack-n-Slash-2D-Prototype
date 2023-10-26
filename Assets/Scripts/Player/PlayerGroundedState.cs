@@ -11,6 +11,8 @@ public class PlayerGroundedState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        
+        _playerControls.Combat.Attack.performed += _ => Attack();
     }
 
     public override void Exit()
@@ -28,7 +30,7 @@ public class PlayerGroundedState : PlayerState
         // if (Input.GetKeyDown(KeyCode.Q) && player.skill.parry.parryUnlocked)
         //     stateMachine.ChangeState(player.counterAttack);
         
-        _playerControls.Combat.Attack.performed += _ => Attack();
+        // _playerControls.Combat.Attack.performed += _ => Attack();
         // _playerControls.Combat.Dash.performed += _ => UseActiveCard();
 
         // if (!player.IsGroundDetected())

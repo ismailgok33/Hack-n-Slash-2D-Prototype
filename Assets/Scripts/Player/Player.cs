@@ -10,6 +10,9 @@ public class Player : Entity
     public float moveSpeed = 12f;
     public float defaultMoveSpeed;
     
+    public Transform stumpAttackCheck;
+    public Vector3 stumpAttackCheckSize = new Vector3(3, 1);
+    
     [Header("Combat info")]
     // [SerializeField] private int health = 1;
     [SerializeField] private int damage = 1;
@@ -22,6 +25,9 @@ public class Player : Entity
     public PlayerMoveState MoveState { get; private set; }
     public PlayerPrimaryAttackState PrimaryAttackState { get; private set; }
     public PlayerDashState PlayerDashState { get; private set; }
+    public PlayerDeathState PlayerDeathState { get; private set; }
+    public PlayerSlideAttackState PlayerSlideAttackState { get; private set; }
+    public PlayerStumpAttackState PlayerStumpAttackState { get; private set; }
     
     protected override void Awake()
     {
@@ -33,6 +39,9 @@ public class Player : Entity
         MoveState = new PlayerMoveState(this, StateMachine, "Move", _playerControls);
         PrimaryAttackState = new PlayerPrimaryAttackState(this, StateMachine, "Attack", _playerControls);
         PlayerDashState = new PlayerDashState(this, StateMachine, "Dash", _playerControls);
+        PlayerDeathState = new PlayerDeathState(this, StateMachine, "Die", _playerControls);
+        PlayerSlideAttackState = new PlayerSlideAttackState(this, StateMachine, "SlideAttack", _playerControls);
+        PlayerStumpAttackState = new PlayerStumpAttackState(this, StateMachine, "StumpAttack", _playerControls);
     }
     
     protected override void Start()
@@ -77,7 +86,7 @@ public class Player : Entity
     {
         base.Die();
 
-        // stateMachine.ChangeState(deadState);
+        StateMachine.ChangeState(PlayerDeathState);
         
         _playerControls.Disable();
     }
@@ -92,11 +101,17 @@ public class Player : Entity
         moveSpeed = newMoveSpeed;
     }
     
-    public void SetDefaultMovementSpeed()
+    public void SetDefaultMovementSpeed() 
     {
         moveSpeed = defaultMoveSpeed;
     }
-    
+
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+        Gizmos.DrawWireCube(stumpAttackCheck.position, stumpAttackCheckSize);
+    }
+
     private void OnEnable()
     {
         _playerControls.Enable();

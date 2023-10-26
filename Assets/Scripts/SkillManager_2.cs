@@ -3,12 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CardSkill
-{
-    Dash,
-    Pistol
-}
-
 public class SkillManager_2 : MonoBehaviour
 {
     public static SkillManager_2 Instance { get; private set; }

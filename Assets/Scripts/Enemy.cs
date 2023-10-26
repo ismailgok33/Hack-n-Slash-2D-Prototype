@@ -63,12 +63,17 @@ public class Enemy : MonoBehaviour
         var hit = Physics2D.Raycast(position, _playerPosition - position, AttackRange, _playerLayerMask);
         if (hit.collider == null) return;
         Debug.Log("A collider is found!");
-        var player = hit.collider.GetComponent<PlayerController>();
-        if (player != null)
-        {
-            Debug.Log("Player is hit!");
-            player.TakeDamage(damage);
-        }
+        var playerStats = hit.collider.GetComponent<PlayerStats>();
+        if (playerStats == null) return;
+        playerStats.TakeDamage(damage);
+        Debug.Log("Player is hit!");
+        
+        // var player = hit.collider.GetComponent<PlayerController>();
+        // if (player != null)
+        // {
+        //     Debug.Log("Player is hit!");
+        //     player.TakeDamage(damage);
+        // }
     }
 
     private void OnDrawGizmos()

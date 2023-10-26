@@ -32,4 +32,27 @@ public class PlayerAnimationTriggers : MonoBehaviour
             }
         }
     }
+    
+    private void StumpAttackTrigger()
+    {
+        // AudioManager.instance.PlaySFX(2,null);
+
+        Collider2D[] colliders =
+            Physics2D.OverlapBoxAll(player.stumpAttackCheck.position, player.stumpAttackCheckSize, 0);
+
+        foreach (var hit in colliders)
+        {
+            var enemy = hit.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                // TODO: Replace this with stats.DoDamage after refactoring the Enemy
+                player.DoDamage(enemy);
+                
+                // EnemyStats _target = hit.GetComponent<EnemyStats>();
+                //
+                // if(_target != null) 
+                //     player.stats.DoDamage(_target);
+            }
+        }
+    }
 }

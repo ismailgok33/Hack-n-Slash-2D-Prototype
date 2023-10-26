@@ -13,7 +13,7 @@ public class Entity : MonoBehaviour
     [Header("Collision info")]
     public Transform attackCheck;
     public float attackCheckRadius = 1.2f;
-    
+
     public int facingDir { get; private set; } = 1;
     protected bool facingRight = true;
     

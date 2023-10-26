@@ -20,6 +20,19 @@ public class CardManager : MonoBehaviour
 
     private void Start()
     {
+        Transform cardTemplate = transform.Find("CardTemplate");
+
+        for (var i = 0; i < cards.Count; i++)
+        {
+            var cardTransform = Instantiate(cardTemplate, transform);
+            cardTransform.gameObject.SetActive(true);
+
+            var offset = new Vector2(-20, 10);
+            cardTransform.GetComponent<RectTransform>().anchoredPosition = new Vector2(offset.x * i, offset.y * i);
+            
+            cardTransform.GetComponent<Card>().SetupCard();
+        }
+        
         if (cards.Count > 0)
         {
             activeCard = cards[0];

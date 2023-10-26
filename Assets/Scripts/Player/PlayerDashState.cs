@@ -23,7 +23,6 @@ public class PlayerDashState : PlayerState
 
         // player.SetZeroVelocity();
         player.SetDefaultMovementSpeed();
-
         player.stats.MakeInvincible(false);
     }
     
