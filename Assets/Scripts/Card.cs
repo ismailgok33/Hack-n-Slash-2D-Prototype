@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
-    [SerializeField] private CardScriptableObject cardSO;
+    public CardScriptableObject cardSO;
 
     [SerializeField] private int amount;
     
@@ -18,8 +18,8 @@ public class Card : MonoBehaviour
     
     private CardSkill cardSkill;
 
-    private bool onCooldown = false;
-
+    // private bool onCooldown = false;
+    
     public void SetupCard()
     {
         if (cardSO == null) return;
@@ -39,6 +39,8 @@ public class Card : MonoBehaviour
     private void UpdateCardAmount()
     {
         amountSlider.value = cardSO.amount - amount;
+        
+        DestroyActiveCard();
     }
 
     private void UseCard()
@@ -62,11 +64,14 @@ public class Card : MonoBehaviour
         UseCard();
         return true;
     }
-    
-    private IEnumerator EndCardRoutine()
+
+    private void DestroyActiveCard()
     {
-        yield return new WaitForSeconds(cardSO.cooldown);
-        onCooldown = false;
+        if (amount > 0) return;
+        
+        // TODO: Play Card Destruction FX
+        
+        CardManager.Instance.DestroyActiveCard();
     }
 
     public CardSkill GetCardSkill()

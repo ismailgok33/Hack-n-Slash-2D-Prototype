@@ -16,7 +16,7 @@ MonoBehaviour:
   color: {r: 1, g: 0.6273585, b: 0.6273585, a: 1}
   icon: {fileID: 721528760, guid: 3a5328a64c6e2c54fb46bca3258ffbb4, type: 3}
   damage: 1
-  amount: 5
+  amount: 1
   type: 0
   skill: 1
   cooldown: 3

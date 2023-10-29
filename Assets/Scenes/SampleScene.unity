@@ -666,8 +666,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a13cb75b53c58489f06d8a94c64441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards: []
-  activeCard: {fileID: 0}
+  cardSOList:
+  - {fileID: 11400000, guid: 1c0265c41db69f64b93e940a7f365778, type: 2}
+  - {fileID: 11400000, guid: 1c0265c41db69f64b93e940a7f365778, type: 2}
+  - {fileID: 11400000, guid: 7b06deaedae68724a97ce6e2e6655c89, type: 2}
+  - {fileID: 11400000, guid: f253267033755e24dbe3bf8ca194da17, type: 2}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -5585,7 +5588,7 @@ RectTransform:
   m_Father: {fileID: 737252131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -21020,13 +21023,14 @@ GameObject:
   - component: {fileID: 1715431969}
   - component: {fileID: 1715431971}
   - component: {fileID: 1715431970}
+  - component: {fileID: 1715431972}
   m_Layer: 5
   m_Name: CardTemplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1715431969
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21087,6 +21091,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715431968}
   m_CullTransparentMesh: 1
+--- !u!114 &1715431972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715431968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4347516203824c439f45053bd883d72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardSO: {fileID: 0}
+  amount: 0
+  cardNameText: {fileID: 2083260532}
+  cardIconImage: {fileID: 1106282945}
+  cardColor: {fileID: 1715431970}
+  amountSlider: {fileID: 659156810}
 --- !u!1 &1797139499
 GameObject:
   m_ObjectHideFlags: 0
@@ -21218,9 +21240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a13cb75b53c58489f06d8a94c64441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards:
-  - {fileID: 0}
-  activeCard: {fileID: 0}
+  cardSOList: []
 --- !u!4 &1818565430
 Transform:
   m_ObjectHideFlags: 0
