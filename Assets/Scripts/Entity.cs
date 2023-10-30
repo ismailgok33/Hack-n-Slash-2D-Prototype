@@ -88,6 +88,11 @@ public class Entity : MonoBehaviour
             facingRight = false;
     }
     
+    protected virtual void ReturnDefaultSpeed()
+    {
+        anim.speed = 1;
+    }
+    
     public virtual void Die()
     {
 

@@ -33,9 +33,8 @@ public class EnemyStats : CharacterStats
     {
         base.Die();
 
-        // TODO: Handle enemy death
-        // enemy.Die();
+        enemy.Die();
 
-        Destroy(gameObject, 5f);
+        // Destroy(gameObject, 3f);
     }
 }

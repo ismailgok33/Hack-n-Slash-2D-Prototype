@@ -16,13 +16,13 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float attackRange = 1f;
     
     private State _state;
-    private Enemy _enemy;
+    private Enemy_2 enemy2;
     private NavMeshAgent _navMeshAgent;
     private Rigidbody2D _rigidbody2D;
 
     private void Awake()
     {
-        _enemy = GetComponent<Enemy>();
+        enemy2 = GetComponent<Enemy_2>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
@@ -32,8 +32,8 @@ public class EnemyAI : MonoBehaviour
         _navMeshAgent.updateRotation = false;
         _navMeshAgent.updateUpAxis = false;
         _state = State.Chase;
-        attackRange = _enemy.AttackRange;
-        _enemy.OnEnemyKilled += EnemyOnOnEnemyKilled;
+        attackRange = enemy2.AttackRange;
+        enemy2.OnEnemyKilled += Enemy2OnOnEnemy2Killed;
     }
 
     private void Update()
@@ -77,7 +77,7 @@ public class EnemyAI : MonoBehaviour
     {
         _navMeshAgent.isStopped = true;
         
-        _enemy.Attack(PlayerController.Instance.GetPosition());
+        enemy2.Attack(PlayerController.Instance.GetPosition());
         
         // Check if the player is outside of attack range
         if (Vector3.Distance(transform.position, PlayerController.Instance.GetPosition()) > attackRange)
@@ -86,7 +86,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
     
-    private void EnemyOnOnEnemyKilled(object sender, EventArgs e)
+    private void Enemy2OnOnEnemy2Killed(object sender, EventArgs e)
     {
         _state = State.Dead;
     }

@@ -17,20 +17,7 @@ public class PlayerAnimationTriggers : MonoBehaviour
 
         Collider2D[] colliders = Physics2D.OverlapCircleAll(player.attackCheck.position, player.attackCheckRadius);
 
-        foreach (var hit in colliders)
-        {
-            var enemy = hit.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                // TODO: Replace this with stats.DoDamage after refactoring the Enemy
-                player.DoDamage(enemy);
-                
-                // EnemyStats _target = hit.GetComponent<EnemyStats>();
-                //
-                // if(_target != null) 
-                //     player.stats.DoDamage(_target);
-            }
-        }
+        DamageEnemies(colliders);
     }
     
     private void StumpAttackTrigger()
@@ -40,18 +27,23 @@ public class PlayerAnimationTriggers : MonoBehaviour
         Collider2D[] colliders =
             Physics2D.OverlapBoxAll(player.stumpAttackCheck.position, player.stumpAttackCheckSize, 0);
 
+        DamageEnemies(colliders);
+    }
+
+    private void DamageEnemies(Collider2D[] colliders)
+    {
         foreach (var hit in colliders)
         {
             var enemy = hit.GetComponent<Enemy>();
             if (enemy != null)
             {
                 // TODO: Replace this with stats.DoDamage after refactoring the Enemy
-                player.DoDamage(enemy);
+                // player.DoDamage(enemy);
                 
-                // EnemyStats _target = hit.GetComponent<EnemyStats>();
-                //
-                // if(_target != null) 
-                //     player.stats.DoDamage(_target);
+                EnemyStats target = hit.GetComponent<EnemyStats>();
+                
+                if(target != null) 
+                    player.stats.DoDamage(target);
             }
         }
     }

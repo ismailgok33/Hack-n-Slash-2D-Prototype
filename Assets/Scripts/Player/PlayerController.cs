@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
     {
         var hit = Physics2D.Raycast(transform.position, _lastMoveDirection, attackOffset, _enemyLayerMask);
         if (hit.collider == null) return;
-        var enemy = hit.collider.GetComponent<Enemy>();
+        var enemy = hit.collider.GetComponent<Enemy_2>();
         if (enemy != null)
         {
             enemy.TakeDamage(damage);
