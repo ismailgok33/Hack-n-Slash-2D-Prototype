@@ -20,7 +20,7 @@ public class Enemy : Entity
     
     public EnemyStateMachine stateMachine { get; private set; }
     // public EntityFX fx { get; private set; }
-    private Player player;
+    public Player player;
     public string lastAnimBoolName {  get; private set; }
     protected override void Awake()
     {
