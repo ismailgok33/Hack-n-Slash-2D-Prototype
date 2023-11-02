@@ -18,3 +18,5 @@ MonoBehaviour:
   damage: 1
   amount: 10
   type: 0
+  skill: 3
+  cooldown: 0.3
