@@ -34,9 +34,15 @@ public class ArcherBattleState : EnemyState
         if (enemy.DistanceToPlayer() < enemy.attackDistance)
         {
             if (CanAttack())
+            {
+                enemy.FlipSprite();
                 stateMachine.ChangeState(enemy.AttackState);
+            }
             else
+            {
+                enemy.PositionAttackCheck(0,0);
                 stateMachine.ChangeState(enemy.IdleState);
+            }
         }
         else
         {

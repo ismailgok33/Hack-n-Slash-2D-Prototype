@@ -78,17 +78,19 @@ public class Enemy : Entity
         _navMeshAgent.isStopped = true;
     }
     
-    private void FlipSprite()
+    public void FlipSprite()
     {
         var playerPosition = PlayerController.Instance.GetPosition();
         var isPlayerToTheRight = playerPosition.x > transform.position.x;
         facingRight = isPlayerToTheRight;
+        facingDir = facingRight ? 1 : -1;
         transform.localScale = new Vector3(isPlayerToTheRight ? 1 : -1, 1, 1);
     }
 
     public override void PositionAttackCheck(float xInput, float yInput)
     {
         attackCheck.localPosition = (player.transform.position - transform.position).normalized * 0.8f * new Vector2(facingRight ? 1 : -1, 1);
+        facingDirection = (player.transform.position - transform.position).normalized;
         // attackCheck.localPosition = _navMeshAgent.destination.normalized * 0.8f;
     }
 

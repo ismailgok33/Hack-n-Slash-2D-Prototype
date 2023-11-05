@@ -14,6 +14,8 @@ public class ArcherAttackState : EnemyState
     public override void Enter()
     {
         base.Enter();
+        
+        enemy.PositionAttackCheck(0, 0);
     }
 
     public override void Exit()

@@ -14,8 +14,10 @@ public class Entity : MonoBehaviour
     public Transform attackCheck;
     public float attackCheckRadius = 1.2f;
 
-    public int facingDir { get; private set; } = 1;
+    public int facingDir { get; set; } = 1;
     protected bool facingRight = true;
+    public Vector2 facingDirection { get; set; } = Vector2.right;
+    private Vector2 lastFacingDirection = Vector2.right;
     
     protected virtual void Awake()
     {
@@ -75,9 +77,16 @@ public class Entity : MonoBehaviour
         else if (xInput < 0)
             attackCheck.localPosition = new Vector3(-xInput, yInput, 0);
         else if (xInput == 0 && yInput == 0)
+        {
             attackCheck.localPosition = new Vector3(1f, 0, 0);
+            facingDirection = lastFacingDirection;
+            return;
+        }
         else
             attackCheck.localPosition = new Vector3(0, yInput, 0);
+        
+        facingDirection = new Vector2(xInput, yInput);
+        lastFacingDirection = facingDirection;
     }
 
     public virtual void SetupDefaultFacingDir(int direction)
