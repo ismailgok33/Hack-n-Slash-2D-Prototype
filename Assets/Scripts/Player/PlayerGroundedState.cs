@@ -12,6 +12,9 @@ public class PlayerGroundedState : PlayerState
     {
         base.Enter();
         
+        // if (Time.timeScale == 0)
+        //     return;
+        
         _playerControls.Combat.Attack.performed += _ => Attack();
     }
 
@@ -42,6 +45,9 @@ public class PlayerGroundedState : PlayerState
 
     private void Attack()
     {
+        if (GameManager.Instance.gameIsPaused)
+            return;
+        
         stateMachine.ChangeState(player.PrimaryAttackState);
     }
     

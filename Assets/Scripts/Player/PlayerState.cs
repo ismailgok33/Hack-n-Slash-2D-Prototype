@@ -34,6 +34,9 @@ public class PlayerState
     
     public virtual void Update()
     {
+        if (GameManager.Instance.gameIsPaused)
+            return;
+        
         stateTimer -= Time.deltaTime;
         
         var moveInput = _playerControls.Movement.Move.ReadValue<Vector2>().normalized;

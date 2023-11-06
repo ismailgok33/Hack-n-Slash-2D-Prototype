@@ -55,11 +55,12 @@ public class Player : Entity
         defaultMoveSpeed = moveSpeed;
         
         _playerControls.Combat.Dash.performed += _ => UseActiveCard();
+        _playerControls.Menu.Menu.performed += _ => TogglePauseMenu();
     }
 
     protected override void Update()
     {
-        if (Time.timeScale == 0)
+        if (GameManager.Instance.gameIsPaused)
             return;
 
         base.Update();
@@ -93,6 +94,9 @@ public class Player : Entity
     
     private void UseActiveCard()
     {
+        if (GameManager.Instance.gameIsPaused)
+            return;
+        
         CardManager.Instance.UseActiveCard();
     }
     
@@ -104,6 +108,11 @@ public class Player : Entity
     public void SetDefaultMovementSpeed() 
     {
         moveSpeed = defaultMoveSpeed;
+    }
+    
+    private void TogglePauseMenu()
+    {
+        UIManager.Instance.TogglePauseMenu();
     }
 
     protected override void OnDrawGizmos()

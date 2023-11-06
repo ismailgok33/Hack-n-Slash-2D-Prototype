@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     
     private Transform player;
-    private bool gameIsPaused;
+    public bool gameIsPaused;
 
     private void Awake()
     {
@@ -19,16 +20,26 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         player = PlayerManager.Instance.player.transform;
-        
-        // TODO: Register ESC key as menu key here and make the game pause in Update
+    }
+    
+    public void RestartScene()
+    {   
+        var scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
     }
     
     public void PauseGame(bool pause)
     {
         if (pause)
+        {
             Time.timeScale = 0;
+            gameIsPaused = true;
+        }
         else
+        {
             Time.timeScale = 1;
+            gameIsPaused = false;
+        }
     }
     
 }
