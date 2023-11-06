@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,7 @@ public class Enemy : Entity
     [HideInInspector] public float lastTimeAttacked;
     
     private NavMeshAgent _navMeshAgent;
-    
+    public static event EventHandler OnEnemyDeath;
     public EnemyStateMachine stateMachine { get; private set; }
     // public EntityFX fx { get; private set; }
     [HideInInspector] public Player player;
@@ -92,6 +93,13 @@ public class Enemy : Entity
         attackCheck.localPosition = (player.transform.position - transform.position).normalized * 0.8f * new Vector2(facingRight ? 1 : -1, 1);
         facingDirection = (player.transform.position - transform.position).normalized;
         // attackCheck.localPosition = _navMeshAgent.destination.normalized * 0.8f;
+    }
+
+    public override void Die()
+    {
+        base.Die();
+        
+        OnEnemyDeath?.Invoke(this, EventArgs.Empty);
     }
 
     protected override void OnDrawGizmos()

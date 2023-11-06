@@ -116,4 +116,9 @@ public class Player : Entity
     {
         _playerControls.Enable();
     }
+    
+    private void OnDisable()
+    {
+        _playerControls.Disable();
+    }
 }
