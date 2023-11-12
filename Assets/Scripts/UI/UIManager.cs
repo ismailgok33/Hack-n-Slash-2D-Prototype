@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -42,6 +43,8 @@ public class UIManager : MonoBehaviour
     public void ResumeGameButton() => SwitchTo(null);
     
     public void RestartGameButton() => GameManager.Instance.RestartScene();
+    
+    public void MainMenuButton() => SceneManager.LoadScene(0);
 
     public void TogglePauseMenu() => SwitchTo(pauseMenu.activeSelf ? null : pauseMenu);
 }
