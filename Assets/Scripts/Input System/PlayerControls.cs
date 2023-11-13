@@ -109,9 +109,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Dash"",
+                    ""name"": ""ConsumableCard"",
                     ""type"": ""Button"",
                     ""id"": ""54b6577c-d397-4b3f-a958-70c4db896476"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PermanentCard"",
+                    ""type"": ""Button"",
+                    ""id"": ""23e58c01-2916-4160-ae5c-dda8f5d61ec8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -137,7 +146,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Dash"",
+                    ""action"": ""ConsumableCard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""54bb734f-4873-4a40-9933-f2416895b00e"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PermanentCard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -180,7 +200,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Combat
         m_Combat = asset.FindActionMap("Combat", throwIfNotFound: true);
         m_Combat_Attack = m_Combat.FindAction("Attack", throwIfNotFound: true);
-        m_Combat_Dash = m_Combat.FindAction("Dash", throwIfNotFound: true);
+        m_Combat_ConsumableCard = m_Combat.FindAction("ConsumableCard", throwIfNotFound: true);
+        m_Combat_PermanentCard = m_Combat.FindAction("PermanentCard", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Menu = m_Menu.FindAction("Menu", throwIfNotFound: true);
@@ -292,13 +313,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Combat;
     private List<ICombatActions> m_CombatActionsCallbackInterfaces = new List<ICombatActions>();
     private readonly InputAction m_Combat_Attack;
-    private readonly InputAction m_Combat_Dash;
+    private readonly InputAction m_Combat_ConsumableCard;
+    private readonly InputAction m_Combat_PermanentCard;
     public struct CombatActions
     {
         private @PlayerControls m_Wrapper;
         public CombatActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Attack => m_Wrapper.m_Combat_Attack;
-        public InputAction @Dash => m_Wrapper.m_Combat_Dash;
+        public InputAction @ConsumableCard => m_Wrapper.m_Combat_ConsumableCard;
+        public InputAction @PermanentCard => m_Wrapper.m_Combat_PermanentCard;
         public InputActionMap Get() { return m_Wrapper.m_Combat; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -311,9 +334,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
-            @Dash.started += instance.OnDash;
-            @Dash.performed += instance.OnDash;
-            @Dash.canceled += instance.OnDash;
+            @ConsumableCard.started += instance.OnConsumableCard;
+            @ConsumableCard.performed += instance.OnConsumableCard;
+            @ConsumableCard.canceled += instance.OnConsumableCard;
+            @PermanentCard.started += instance.OnPermanentCard;
+            @PermanentCard.performed += instance.OnPermanentCard;
+            @PermanentCard.canceled += instance.OnPermanentCard;
         }
 
         private void UnregisterCallbacks(ICombatActions instance)
@@ -321,9 +347,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
-            @Dash.started -= instance.OnDash;
-            @Dash.performed -= instance.OnDash;
-            @Dash.canceled -= instance.OnDash;
+            @ConsumableCard.started -= instance.OnConsumableCard;
+            @ConsumableCard.performed -= instance.OnConsumableCard;
+            @ConsumableCard.canceled -= instance.OnConsumableCard;
+            @PermanentCard.started -= instance.OnPermanentCard;
+            @PermanentCard.performed -= instance.OnPermanentCard;
+            @PermanentCard.canceled -= instance.OnPermanentCard;
         }
 
         public void RemoveCallbacks(ICombatActions instance)
@@ -394,7 +423,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface ICombatActions
     {
         void OnAttack(InputAction.CallbackContext context);
-        void OnDash(InputAction.CallbackContext context);
+        void OnConsumableCard(InputAction.CallbackContext context);
+        void OnPermanentCard(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

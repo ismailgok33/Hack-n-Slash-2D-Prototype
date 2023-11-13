@@ -87,9 +87,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dash",
+                    "name": "ConsumableCard",
                     "type": "Button",
                     "id": "54b6577c-d397-4b3f-a958-70c4db896476",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PermanentCard",
+                    "type": "Button",
+                    "id": "23e58c01-2916-4160-ae5c-dda8f5d61ec8",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -115,7 +124,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dash",
+                    "action": "ConsumableCard",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "54bb734f-4873-4a40-9933-f2416895b00e",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PermanentCard",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

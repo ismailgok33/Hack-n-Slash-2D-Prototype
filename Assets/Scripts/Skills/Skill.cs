@@ -19,9 +19,13 @@ public class Skill : MonoBehaviour
         cooldownTimer -= Time.deltaTime;
     }
     
-    public virtual bool CanUseSkill()
+    public virtual bool CanUseSkill(Card card)
     {
-        if (cooldownTimer > 0 || !CardManager.Instance.GetActiveCard().CanUseCard()) return false;
+        // if (cooldownTimer > 0 || !CardManager.Instance.GetActiveCard().CanUseCard()) return false;
+        if (cooldownTimer > 0 || !card.CanUseCard()) return false;
+        
+        Debug.Log("CanUseSkill is called inside Skill.");
+        
         UseSkill();
         cooldownTimer = cooldown;
         return true;

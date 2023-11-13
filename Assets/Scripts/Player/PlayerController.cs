@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         
         _lastMoveDirection = Vector3.down;
         _playerControls.Combat.Attack.performed += _ => Attack();
-        _playerControls.Combat.Dash.performed += _ => UseActiveCard();
+        // _playerControls.Combat.Dash.performed += _ => UseActiveCard();
         // _originalMoveSpeed = moveSpeed;
     }
 

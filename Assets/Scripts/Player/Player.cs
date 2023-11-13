@@ -54,7 +54,8 @@ public class Player : Entity
 
         defaultMoveSpeed = moveSpeed;
         
-        _playerControls.Combat.Dash.performed += _ => UseActiveCard();
+        _playerControls.Combat.ConsumableCard.performed += _ => UseActiveCard();
+        _playerControls.Combat.PermanentCard.performed += _ => UsePermanentCard();
         _playerControls.Menu.Menu.performed += _ => TogglePauseMenu();
     }
 
@@ -98,6 +99,14 @@ public class Player : Entity
             return;
         
         CardManager.Instance.UseActiveCard();
+    }
+    
+    private void UsePermanentCard()
+    {
+        if (GameManager.Instance.gameIsPaused)
+            return;
+        
+        CardManager.Instance.UsePermanentCard();
     }
     
     public void SetMoveSpeed(float newMoveSpeed)

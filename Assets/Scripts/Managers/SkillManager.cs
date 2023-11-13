@@ -34,26 +34,47 @@ public class SkillManager : MonoBehaviour
         SlideAttackSkill = GetComponent<SlideAttackSkill>();
         StumpAttackSkill = GetComponent<StumpAttackSkill>();
     }
-
-    public void UseSkill(CardSkill cardSkill)
+    
+    public Skill GetCardSkill(CardSkill cardSkill)
     {
         switch (cardSkill)
         {
             case CardSkill.Dash:
-                DashSkill.CanUseSkill();
-                break;
+                return DashSkill;
             case CardSkill.SlideAttack:
-                SlideAttackSkill.CanUseSkill();
-                break;
+                return SlideAttackSkill;
             case CardSkill.StumpAttack:
-                StumpAttackSkill.CanUseSkill();
-                break;
+                return StumpAttackSkill;
             case CardSkill.Pistol:
                 Debug.Log("Pistol is used");
-                break;
+                return null;
             default:
                 Debug.Log("Skill cannot be identified!");
-                break;
+                return null;
         }
+    }
+
+    public void UseSkill(Card card)
+    {
+        GetCardSkill(card.GetCardSkill())?.CanUseSkill(card);
+        
+        // switch (cardSkill)
+        // {
+        //     case CardSkill.Dash:
+        //         DashSkill.CanUseSkill();
+        //         break;
+        //     case CardSkill.SlideAttack:
+        //         SlideAttackSkill.CanUseSkill();
+        //         break;
+        //     case CardSkill.StumpAttack:
+        //         StumpAttackSkill.CanUseSkill();
+        //         break;
+        //     case CardSkill.Pistol:
+        //         Debug.Log("Pistol is used");
+        //         break;
+        //     default:
+        //         Debug.Log("Skill cannot be identified!");
+        //         break;
+        // }
     }
 }

@@ -11,9 +11,9 @@ public class StumpAttackSkill : Skill
         base.Start();
     }
     
-    public override bool CanUseSkill()
+    public override bool CanUseSkill(Card card)
     {
-        return base.CanUseSkill();
+        return base.CanUseSkill(card);
     }
     
     public override void UseSkill()
