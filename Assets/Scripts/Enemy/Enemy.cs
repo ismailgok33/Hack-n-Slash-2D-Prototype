@@ -67,7 +67,7 @@ public class Enemy : Entity
     public virtual void ChasePlayer()
     {
         // Chase player
-        _navMeshAgent.SetDestination(PlayerController.Instance.GetPosition());
+        _navMeshAgent.SetDestination(PlayerManager.Instance.player.transform.position);
         _navMeshAgent.isStopped = false;
         
         // FlipSprite();
@@ -81,7 +81,7 @@ public class Enemy : Entity
     
     public void FlipSprite()
     {
-        var playerPosition = PlayerController.Instance.GetPosition();
+        var playerPosition = PlayerManager.Instance.player.transform.position;
         var isPlayerToTheRight = playerPosition.x > transform.position.x;
         facingRight = isPlayerToTheRight;
         facingDir = facingRight ? 1 : -1;

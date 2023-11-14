@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4007462669925903812}
   - component: {fileID: 3548455746118957126}
-  - component: {fileID: 409124545662366119}
-  - component: {fileID: 670498179583590637}
   - component: {fileID: 5863869484308111800}
   - component: {fileID: 3239099522100370817}
   - component: {fileID: 4785963080725216260}
@@ -22,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4007462669925903812
 Transform:
   m_ObjectHideFlags: 0
@@ -67,35 +65,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &409124545662366119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2192853968747649299}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5701da4f3d5134a38a5167525aaed8b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 1
-  damage: 1
-  <AttackRange>k__BackingField: 1
-  attackCooldown: 2
---- !u!114 &670498179583590637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2192853968747649299}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e51a73ecd274c443ea40e5eba2d225a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackRange: 1
 --- !u!195 &5863869484308111800
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -78,11 +78,6 @@ public class Player : Entity
     }
     
     public void AnimationTrigger() => StateMachine.currentState.AnimationFinishTrigger();
-
-    public void DoDamage(Enemy_2 enemy)
-    {
-        enemy.TakeDamage(damage);
-    }
     
     public override void Die()
     {

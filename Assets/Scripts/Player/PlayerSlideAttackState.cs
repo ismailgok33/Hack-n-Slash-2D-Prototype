@@ -48,10 +48,10 @@ public class PlayerSlideAttackState : PlayerState
         var colliders = Physics2D.OverlapCapsuleAll(player.transform.position, playerCollider.size, playerCollider.direction, 0);
         foreach (var hit in colliders)
         {
-            var enemy = hit.GetComponent<Enemy_2>();
-            if (enemy != null)
+            var target = hit.GetComponent<EnemyStats>();
+            if (target != null)
             {
-                player.DoDamage(enemy);
+                player.stats.DoDamage(target);
             }
         }
     }
