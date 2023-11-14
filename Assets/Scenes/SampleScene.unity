@@ -3883,6 +3883,7 @@ GameObject:
   - component: {fileID: 1227866784}
   - component: {fileID: 1227866787}
   - component: {fileID: 1227866786}
+  - component: {fileID: 1227866788}
   m_Layer: 5
   m_Name: ComboUI
   m_TagString: Untagged
@@ -4006,6 +4007,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1227866783}
   m_CullTransparentMesh: 1
+--- !u!114 &1227866788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227866783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d346c694cce064399f55b8892725e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comboCounterText: {fileID: 0}
+  cooldown: 2
+  cooldownTimer: 0
 --- !u!1 &1274341079
 GameObject:
   m_ObjectHideFlags: 0
