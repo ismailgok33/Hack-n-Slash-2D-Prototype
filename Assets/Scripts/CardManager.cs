@@ -10,10 +10,12 @@ public class CardManager : MonoBehaviour
     
     private List<Card> currentCards = new List<Card>();
     public PermanentCard CurrentPermanentCard { get; private set; }
+    private List<PassiveCard> currentPassiveCards = new List<PassiveCard>();
     public Card ActiveCard { get; private set; }
     public int ActiveCardIndex { get; private set; }
     [SerializeField] private List<CardScriptableObject> cardSOList = new List<CardScriptableObject>();
     [SerializeField] private CardScriptableObject permanentCardSO;
+    [SerializeField] private List<CardScriptableObject> passiveCardSOList = new List<CardScriptableObject>();
 
     private const int XOffset = -280;
     private const int YOffset = 150;
@@ -53,6 +55,7 @@ public class CardManager : MonoBehaviour
         }
         
         SetupPermanentCard();
+        SetupPassiveCards();
     }
 
     private void SetupPermanentCard()
@@ -66,6 +69,27 @@ public class CardManager : MonoBehaviour
         card.SetupCard();
         
         CurrentPermanentCard = card;
+    }
+
+    private void SetupPassiveCards()
+    {
+        var cardTemplate = transform.Find("PassiveCardTemplate");
+
+        for (var i = 0; i < passiveCardSOList.Count; i++)
+        {
+            var cardTransform = Instantiate(cardTemplate, transform);
+            cardTransform.gameObject.SetActive(true);
+
+            var offset = new Vector2(-150, 0);
+            cardTransform.GetComponent<RectTransform>().anchoredPosition = new Vector2(offset.x * i + XOffset, offset.y * i + YOffset);
+            
+            var card = cardTransform.GetComponent<PassiveCard>();
+
+            card.cardSO = passiveCardSOList[i];
+            card.SetupCard();
+            card.CanUseCard();
+            currentPassiveCards.Insert(0, card);
+        }
     }
 
     public void UseActiveCard()

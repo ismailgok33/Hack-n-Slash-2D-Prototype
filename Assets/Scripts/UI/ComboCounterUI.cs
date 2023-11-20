@@ -9,7 +9,7 @@ public class ComboCounterUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI comboCounterText;
     
     private int _comboCounter = 0;
-    public float cooldown = 2f;
+    public float cooldown = 5f;
     public float cooldownTimer;
 
     private void Awake()
@@ -36,7 +36,8 @@ public class ComboCounterUI : MonoBehaviour
     private void UpdateComboCounter(object sender, EventArgs e)
     {
         _comboCounter++;
-        comboCounterText.text = _comboCounter.ToString();
+        comboCounterText.text = "X" + _comboCounter;
+        cooldownTimer = cooldown;
         
         Animate();
     }

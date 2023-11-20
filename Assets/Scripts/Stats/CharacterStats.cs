@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum StatType
+{
+   agility,
+   cardCooldown
+}
+
 public class CharacterStats : MonoBehaviour
 {
    [Header("Major stats")]
@@ -37,8 +43,14 @@ public class CharacterStats : MonoBehaviour
       isVulnerable = false;
    }
    
-   public virtual void IncreaseStatTemporaryBy(int modifier, float duration, Stat statToModify)
+   public virtual void IncreaseStatBy(int modifier, float duration, Stat statToModify)
    {
+      if (duration == -1)
+      {
+         statToModify.AddModifier(modifier);
+         return;
+      }
+      
       StartCoroutine(StatModCoroutine(modifier, duration, statToModify));
    }
 
@@ -111,4 +123,11 @@ public class CharacterStats : MonoBehaviour
       return maxHealth.GetValue();
    }
    
+   public Stat GetStat(StatType statType)
+   {
+      if (statType == StatType.agility) return agility;
+      else if (statType == StatType.cardCooldown) return null;
+
+      return null;
+   }
 }

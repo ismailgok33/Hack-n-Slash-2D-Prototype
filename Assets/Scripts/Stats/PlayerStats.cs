@@ -12,7 +12,18 @@ public class PlayerStats : CharacterStats
 
         player = GetComponent<Player>();
     }
-    
+
+    public override void IncreaseStatBy(int modifier, float duration, Stat statToModify)
+    {
+        base.IncreaseStatBy(modifier, duration, statToModify);
+
+        if (statToModify == agility)
+        {
+            player.defaultMoveSpeed += agility.GetValue();
+            player.SetDefaultMovementSpeed();
+        }
+    }
+
     public override void TakeDamage(int damageAmount)
     {
         base.TakeDamage(damageAmount);
